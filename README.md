@@ -7,6 +7,7 @@ WIP Doc = **https://docs.google.com/document/d/1CVzw5MXcq6ky3k56w0bbe1-VUq6FrUC6
 Add .env file with the perplexity key as PPX_API_KEY
 
 # User Manual
+small language mode: Llama-3.2-3B-Instruct
 reference: **https://github.com/unslothai/unsloth**
 
 # Installation Instructions
