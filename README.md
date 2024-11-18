@@ -26,7 +26,7 @@ make run_train
 ##### Hyperparameter
 Modify hyperparameters in **Hyperparameters** blocks in config.py
 
-##### Dataset:=
+##### Dataset:
 Modify dataset in **Data Configuration** blocks in config.py
 
 # Inference
