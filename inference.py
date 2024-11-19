@@ -119,7 +119,7 @@ def main(
     inputs = prepare_input(messages, tokenizer)
     
     # Generate response
-    generate_response(model, inputs, tokenizer)
+    return generate_response(model, inputs, tokenizer)
 
 if __name__ == "__main__":
     # YOUR_FORTRAN_CODE_HERE
