@@ -9,6 +9,7 @@ all: install run_train
 
 # Install dependencies
 install:
+	$(PIP) install -r requirements.txt
 	$(PIP) install unsloth "xformers==0.0.28.post2"
 	$(PIP) uninstall unsloth -y && $(PIP) install --upgrade --no-cache-dir "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
 

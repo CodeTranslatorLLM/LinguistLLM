@@ -20,7 +20,7 @@ random_seed = 3407 # Random seed for reproducibility
 
 # Data Configuration
 data_path = "hf://datasets/CodeTranslatorLLM/Code-Translation/final_responses.json" # Path to the dataset
-data_code_column_name = 'program_code' # Column name for code
+data_code_column_name = 'program_code' # Column name for code ("Fortran" in our case. Changing this won't affect our training)
 data_code_explanation_column_name = 'fortran_code_explanation' # Column name for code explanation
 data_rust_translation_column_name = 'rust_code_translation' # Column name for Rust translation (target output)
 
