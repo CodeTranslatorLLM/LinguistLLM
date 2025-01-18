@@ -1,46 +1,78 @@
 # CodeConvLLM
 
-Develop a Language Model (LLM) that can accurately translate OCaml and Fortran code into C# and Rust, integrate the model into a Visual Studio Code plugin, and ensure the translated code meets industry standards through benchmarking.
+Our team develop a Language Model (LLM) that can accurately translate Fortran code into Rust, integrate the model into an API, and ensure the translated code meets industry standards through benchmarking.
 
-WIP Doc = **https://docs.google.com/document/d/1CVzw5MXcq6ky3k56w0bbe1-VUq6FrUC6rpfZmLhLMTM/edit?usp=sharing**
+You can use this to train other code-to-code tranlation.
 
-Add .env file with the perplexity key as PPX_API_KEY
+This repository leverages the knowledge distillation technique for training. In our process:
+
+1. We utilize the [CodeTranslatorLLM/Code-Translation](https://huggingface.co/datasets/CodeTranslatorLLM/Code-Translation) dataset to generate translated Rust code.
+2. The teacher model, GPT-4, is used to generate these translations.
+3. We then fine-tune a smaller student model, Llama-3.2-3B-Instruct, using the train.py script provided in this repository.
+
+This approach allows us to transfer knowledge from a larger, more powerful model to a smaller, more efficient model with only 3B parameters for code translation tasks.
 
 # Dashboard Playground
-Run cells in Gradio to interact with an AI model that translates your Fortran code to Rust code with our LoRA model!
+We use Gradio to create an interactive graphical user interface (GUI) where users can:
+
++ Enter their Fortran code into a text block.
++ Generate the translated Rust code by clicking the translation button.
+
+Run cells in `Gradio.ipynb` to interact with an AI model that translates your Fortran code to Rust code with our LoRA model!
 
 # User Manual (Training and Inferencing)
 small language mode: Llama-3.2-3B-Instruct
 reference: **https://github.com/unslothai/unsloth**
 
 # Installation Instructions
-install unsloth `"xformers==0.0.28.post2"` and "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git" with:
+install all the requirement with
 ```
 make install
 ```
-refer to **https://github.com/unslothai/unsloth?tab=readme-ov-file#-installation-instructions** if error
+If wanting to use **pip3** instead of pip, change `PIP := pip` to `PIP := pip3`
+
+If wanting to instal manually:
+```
+pip install pandas
+pip install unsloth `"xformers==0.0.28.post2"` and "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git" 
+```
+If failed to install unsloth, please refer to **https://github.com/unslothai/unsloth?tab=readme-ov-file#-installation-instructions** 
 
 # Train Model
+Our training uses
++ Data: [CodeTranslatorLLM/Code-Translation](https://huggingface.co/datasets/CodeTranslatorLLM/Code-Translation)
++ Base Model:
++ Fine-tune Model: Llama-3.2-3B-Instruct
 run train.py with:
 ```
 make run_train
 ```
-
-##### Hyperparameter
-Modify hyperparameters in **Hyperparameters** blocks in config.py
+You can modify hyperparameters in **Hyperparameters** blocks in config.py
 
 ##### Dataset:
-Modify dataset in **Data Configuration** blocks in config.py
+The default dataset used in this project is [CodeTranslatorLLM/Code-Translation](https://huggingface.co/datasets/CodeTranslatorLLM/Code-Translation).
+
+If you want to use your own dataset, you can easily customize the configuration by modifying the following parameters in the Data Configuration section of `config.py`:
+
++ `data_path`: Path to your dataset file.
++ `data_code_explanation_column_name`: Name of the column containing the code explanations.
++ `data_rust_translation_column_name`: Name of the column containing the Rust translations.
 
 # Inference
-**Make sure "lora_model" folder is in your current folder for inferencing**
+To perform inference, ensure the lora_model folder is located in your current working directory. This folder contains the necessary model files required for running the inference process.
 
-run inference with:
+Run the inference using the following command:
 ```
 make run_inference
 ```
 
-change the input of `USER_INPUT_CODE`, `YOUR_EXPLANATION_HERE`, `MODEL_PATH` in `inference.py` to customize your input 
+Customizing Inference Inputs
+You can customize the inputs for inference by modifying the following variables in the inference.py script:
+
++ `USER_INPUT_CODE`: Specify the input code for translation.
++ `YOUR_EXPLANATION_HERE`: Provide any additional explanation or context (if applicable).
++ `MODEL_PATH`: Set the path to your desired model for inference.
+These configurations allow you to tailor the inference process to your specific needs.
 
 #### Using the Inference API
 The `inferenc_API.py` script allows you to serve the model as a web API, making it easier to integrate with external applications.

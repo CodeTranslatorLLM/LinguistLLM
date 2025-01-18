@@ -62,7 +62,7 @@ def prepare_dataset(config: DataConfig, tokenizer) -> Dataset:
         axis=1
     )
     
-    df['source'] = "not_sure_yet" # TO_ASK
+    df['source'] = "GPT4" # TO_ASK
     df['score'] = "0.0" # TO_ASK
 
     df_reset = df[['conversations', 'source', 'score']].reset_index(drop=True)
